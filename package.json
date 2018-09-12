@@ -1,0 +1,44 @@
+{
+  "name": "react-fluxible",
+  "version": "1.0.0",
+  "description": "State management library for react built on top of fluxible-js.",
+  "main": "lib/index.js",
+  "files": [
+    "lib/*",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ],
+  "dependencies": {
+    "fluxible-js": "^1.0.6",
+    "react": "^16.5.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^9.0.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-minify": "^0.4.3",
+    "babel-preset-react": "^6.24.1",
+    "eslint": "^5.5.0",
+    "eslint-plugin-react": "^7.11.1",
+    "prettier": "^1.14.2"
+  },
+  "scripts": {
+    "test": "jest",
+    "build": "node build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gh_personal:aprilmintacpineda/react-fluxible.git"
+  },
+  "keywords": [
+    "react-js",
+    "fluxible-js",
+    "state-management",
+    "store-management",
+    "stateful"
+  ],
+  "author": "April Mintac Pineda",
+  "license": "MIT"
+}
