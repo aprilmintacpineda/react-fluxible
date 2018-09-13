@@ -8,9 +8,17 @@ export { initializeStore };
 export function connect (wantedState, wantedMutations) {
   return WrappedComponent =>
     class Wrapper extends React.Component {
-      UNSAFE_componentWillMount () {
+      constructor (props) {
+        super(props);
+
+        this.state = {
+          count: 1
+        };
+
         this.removeListener = addListener(() => {
-          this.forceUpdate();
+          this.setState({
+            count: this.state.count + 1
+          });
         });
       }
 

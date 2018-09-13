@@ -33,22 +33,24 @@ function connect(wantedState, wantedMutations) {
     return function (_React$Component) {
       _inherits(Wrapper, _React$Component);
 
-      function Wrapper() {
+      function Wrapper(props) {
         _classCallCheck(this, Wrapper);
 
-        return _possibleConstructorReturn(this, (Wrapper.__proto__ || Object.getPrototypeOf(Wrapper)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (Wrapper.__proto__ || Object.getPrototypeOf(Wrapper)).call(this, props));
+
+        _this.state = {
+          count: 1
+        };
+
+        _this.removeListener = (0, _fluxibleJs.addListener)(function () {
+          _this.setState({
+            count: _this.state.count + 1
+          });
+        });
+        return _this;
       }
 
       _createClass(Wrapper, [{
-        key: 'UNSAFE_componentWillMount',
-        value: function UNSAFE_componentWillMount() {
-          var _this2 = this;
-
-          this.removeListener = (0, _fluxibleJs.addListener)(function () {
-            _this2.forceUpdate();
-          });
-        }
-      }, {
         key: 'componentWillUnmount',
         value: function componentWillUnmount() {
           // clean update listener before we unmount.
