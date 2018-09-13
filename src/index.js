@@ -22,6 +22,7 @@ export function connect (wantedState, wantedMutations) {
       render () {
         return (
           <WrappedComponent
+            {...this.props}
             {...(wantedState ? wantedState(getStore()) : {})}
             {...(wantedMutations
               ? Object.keys(wantedMutations).reduce((mutationCollection, mutation) => {
