@@ -2,7 +2,7 @@
 
 # react-fluxible
 
-State management library for react built on top of [fluxible-js](https://github.com/aprilmintacpineda/fluxible-js). [See demo](https://aprilmintacpineda.github.io/react-fluxible/).
+Smaller, faster, better. A small state management system that supports the idea of asynchronous actions and state persistence out of the box. Built on top of [fluxible-js](https://github.com/aprilmintacpineda/fluxible-js). [See demo](https://aprilmintacpineda.github.io/react-fluxible/).
 
 # Guide
 
@@ -10,12 +10,12 @@ State management library for react built on top of [fluxible-js](https://github.
 
 ### Install
 
-`npm i -s react-fluxible`
+`npm i -s react-fluxible fluxible-js`
 
 ### Initialize store
 
 ```jsx
-import { initializeStore } from 'react-fluxible';
+import { initializeStore } from 'fluxible-js';
 
 initializeStore({
   initialStore: {
@@ -39,7 +39,7 @@ instead of rendering a Provider on top of your app. What you do is before you re
 
 There's also the optional property called `persist` which should also be an object containing two required properties:
 
-- `storage` which should be a reference to the storage that would be used to save the store. It must have `getItem` and `setItem` methods. Both methods should be synchronous. Example would be `window.localStorage`.
+- `storage` which should be a reference to the storage that would be used to save the store. It must have `getItem` and `setItem` methods. Both methods should be synchronous. Example would be `window.localStorage`. The call to `setItem` is deferred by 200ms, this is to minimize and to improve performance.
 - `restore` which should be a function that is synchronous. Restore will be called upon initialization and will receive the `savedStore` as the its only argument. The `savedStore` would be an object containing the states that were previously saved to the storage. It should return an object which would be the states that you want to restore.
 
 Persist feature would only save keys that were returned by `config.persist.restore`. That means, other states that you did not return in that method wouldn't be saved.
@@ -158,7 +158,7 @@ In the example code above, when you call `this.props.updateAnotherState`, it wou
 The `getStore` module is a function that you can call anytime to get the latest store at that point of call.
 
 ```jsx
-import { getStore } from 'react-fluxible';
+import { getStore } from 'fluxible-js';
 
 function notConnectedToStoreFunc() {
   const store = getStore();
@@ -178,6 +178,12 @@ The only thing you would need to change in your existing set up is the Provider.
 3. [Initialize store](#initialize-store).
 4. Replace all `import { connect } from 'react-context-api-store';` with `import { connect } from 'react-fluxible'`.
 5. Test your app.
+
+###### Notes
+
+Deferred updates is not supported by react-fluxible.
+
+---
 
 If you experienced any difficulty migrating, feel free to open an issue.
 

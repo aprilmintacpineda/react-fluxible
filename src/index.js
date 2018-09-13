@@ -1,11 +1,9 @@
 /** @format */
 
-import { initializeStore, updateStore, addListener, getStore } from 'fluxible-js';
+import { updateStore, addUpdateListener, getStore } from 'fluxible-js';
 import React from 'react';
 
-export { initializeStore };
-
-export function connect (wantedState, wantedMutations) {
+export function connect (mapStatesToProps, definedMutations) {
   return WrappedComponent =>
     class Wrapper extends React.Component {
       constructor (props) {
@@ -15,7 +13,7 @@ export function connect (wantedState, wantedMutations) {
           count: 1
         };
 
-        this.removeListener = addListener(() => {
+        this.removeListener = addUpdateListener(() => {
           this.setState({
             count: this.state.count + 1
           });
@@ -31,13 +29,13 @@ export function connect (wantedState, wantedMutations) {
         return (
           <WrappedComponent
             {...this.props}
-            {...(wantedState ? wantedState(getStore()) : {})}
-            {...(wantedMutations
-              ? Object.keys(wantedMutations).reduce((mutationCollection, mutation) => {
+            {...(mapStatesToProps ? mapStatesToProps(getStore()) : {})}
+            {...(definedMutations
+              ? Object.keys(definedMutations).reduce((mutationCollection, mutation) => {
                   return {
                     ...mutationCollection,
                     [mutation]: (...payload) => {
-                      return wantedMutations[mutation](
+                      return definedMutations[mutation](
                         {
                           getStore,
                           updateStore: (updatedState, callback) => {

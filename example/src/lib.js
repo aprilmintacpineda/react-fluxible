@@ -3,7 +3,6 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.initializeStore = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -27,8 +26,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /** @format */
 
-exports.initializeStore = _fluxibleJs.initializeStore;
-function connect(wantedState, wantedMutations) {
+function connect(mapStatesToProps, definedMutations) {
   return function (WrappedComponent) {
     return function (_React$Component) {
       _inherits(Wrapper, _React$Component);
@@ -42,7 +40,7 @@ function connect(wantedState, wantedMutations) {
           count: 1
         };
 
-        _this.removeListener = (0, _fluxibleJs.addListener)(function () {
+        _this.removeListener = (0, _fluxibleJs.addUpdateListener)(function () {
           _this.setState({
             count: _this.state.count + 1
           });
@@ -59,13 +57,13 @@ function connect(wantedState, wantedMutations) {
       }, {
         key: 'render',
         value: function render() {
-          return _react2.default.createElement(WrappedComponent, _extends({}, this.props, wantedState ? wantedState((0, _fluxibleJs.getStore)()) : {}, wantedMutations ? Object.keys(wantedMutations).reduce(function (mutationCollection, mutation) {
+          return _react2.default.createElement(WrappedComponent, _extends({}, this.props, mapStatesToProps ? mapStatesToProps((0, _fluxibleJs.getStore)()) : {}, definedMutations ? Object.keys(definedMutations).reduce(function (mutationCollection, mutation) {
             return _extends({}, mutationCollection, _defineProperty({}, mutation, function () {
               for (var _len = arguments.length, payload = Array(_len), _key = 0; _key < _len; _key++) {
                 payload[_key] = arguments[_key];
               }
 
-              return wantedMutations[mutation].apply(wantedMutations, [{
+              return definedMutations[mutation].apply(definedMutations, [{
                 getStore: _fluxibleJs.getStore,
                 updateStore: function updateStore(updatedState, callback) {
                   (0, _fluxibleJs.updateStore)(updatedState);
