@@ -1,6 +1,6 @@
 {
   "name": "react-fluxible",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "State management library for react built on top of fluxible-js.",
   "main": "lib/index.js",
   "files": [
