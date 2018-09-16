@@ -2,9 +2,9 @@
 
 import { updateStore, addUpdateListener, getStore } from 'fluxible-js';
 import React from 'react';
+import redefineStatics from 'redefine-statics-js';
 
 /**
- *
  * @param {Function} callback function that would be called sa the mutation handler. Should expect an object as the first parameter.
  * @param  {...any} payload to the callback function
  */
@@ -27,7 +27,7 @@ export function dispatch (mutation, ...payload) {
  * @return {Object} the react component.
  */
 export function connect (mapStatesToProps, definedMutations) {
-  return WrappedComponent =>
+  return WrappedComponent => {
     class Wrapper extends React.Component {
       constructor (props) {
         super(props);
@@ -64,5 +64,18 @@ export function connect (mapStatesToProps, definedMutations) {
           />
         );
       }
-    };
+    }
+
+    return redefineStatics(Wrapper, WrappedComponent, [
+      'childContextTypes',
+      'contextTypes',
+      'defaultProps',
+      'displayName',
+      'getDefaultProps',
+      'getDerivedStateFromProps',
+      'mixins',
+      'propTypes',
+      'type'
+    ]);
+  };
 }

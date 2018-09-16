@@ -17,6 +17,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _redefineStaticsJs = require('redefine-statics-js');
+
+var _redefineStaticsJs2 = _interopRequireDefault(_redefineStaticsJs);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -28,7 +32,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /** @format */
 
 /**
- *
  * @param {Function} callback function that would be called sa the mutation handler. Should expect an object as the first parameter.
  * @param  {...any} payload to the callback function
  */
@@ -53,7 +56,7 @@ function dispatch(mutation) {
  */
 function connect(mapStatesToProps, definedMutations) {
   return function (WrappedComponent) {
-    return function (_React$Component) {
+    var Wrapper = function (_React$Component) {
       _inherits(Wrapper, _React$Component);
 
       function Wrapper(props) {
@@ -96,5 +99,7 @@ function connect(mapStatesToProps, definedMutations) {
 
       return Wrapper;
     }(_react2.default.Component);
+
+    return (0, _redefineStaticsJs2.default)(Wrapper, WrappedComponent, ['childContextTypes', 'contextTypes', 'defaultProps', 'displayName', 'getDefaultProps', 'getDerivedStateFromProps', 'mixins', 'propTypes', 'type']);
   };
 }
