@@ -167,6 +167,26 @@ function notConnectedToStoreFunc() {
 }
 ```
 
+### dispatch module
+
+The `dispatch` module is a function that you can use to dispatch actions outside a connected component. It expects a callback function as the first parameter, and other parameters would be passed to the callback function as succeeding arguments.
+
+```jsx
+import { dispatch } from 'react-fluxible';
+
+function notConnectedToStoreFunc() {
+  dispatch(
+    (store, param1, param2) => {
+      store.updateStore({
+        state: 'value'
+      });
+    },
+    'value1',
+    'value2'
+  );
+}
+```
+
 # Migrating from react-context-api-store
 
 The difference here is the that `react-context-api-store` is completely coupled to Context API. This one uses `fluxible-js` to manage state. The job of `react-fluxible` is only to serve as a bridge between `react` and `fluxible-js`.
