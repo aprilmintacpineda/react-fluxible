@@ -11,8 +11,8 @@
   ],
   "dependencies": {
     "fluxible-js": "^2.1.1",
-    "react": "^16.5.0",
-    "redefine-statics-js": "^1.0.1"
+    "react": "^16.5.1",
+    "redefine-statics-js": "^1.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
@@ -21,7 +21,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-minify": "^0.4.3",
     "babel-preset-react": "^6.24.1",
-    "eslint": "^5.5.0",
+    "eslint": "^5.6.0",
     "eslint-plugin-react": "^7.11.1",
     "prettier": "^1.14.2"
   },

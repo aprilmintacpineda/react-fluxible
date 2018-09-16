@@ -66,16 +66,6 @@ export function connect (mapStatesToProps, definedMutations) {
       }
     }
 
-    return redefineStatics(Wrapper, WrappedComponent, [
-      'childContextTypes',
-      'contextTypes',
-      'defaultProps',
-      'displayName',
-      'getDefaultProps',
-      'getDerivedStateFromProps',
-      'mixins',
-      'propTypes',
-      'type'
-    ]);
+    return redefineStatics(Wrapper, WrappedComponent);
   };
 }
