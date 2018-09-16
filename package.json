@@ -12,7 +12,7 @@
   "dependencies": {
     "fluxible-js": "^2.1.1",
     "react": "^16.5.1",
-    "redefine-statics-js": "^1.1.0"
+    "redefine-statics-js": "^1.1.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
