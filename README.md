@@ -10,7 +10,7 @@ Smaller, faster, better. A small state management system that supports the idea 
 
 ### Install
 
-`npm i -s react-fluxible fluxible-js`
+`npm i -s react-fluxible fluxible-js redefine-statics-js`
 
 ### Initialize store
 
