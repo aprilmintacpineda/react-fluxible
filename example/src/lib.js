@@ -8,6 +8,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+exports.dispatch = dispatch;
 exports.connect = connect;
 
 var _fluxibleJs = require('fluxible-js');
@@ -25,6 +26,20 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /** @format */
+
+function dispatch(mutation) {
+  for (var _len = arguments.length, payload = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    payload[_key - 1] = arguments[_key];
+  }
+
+  return mutation.apply(undefined, [{
+    getStore: _fluxibleJs.getStore,
+    updateStore: function updateStore(updatedState, callback) {
+      (0, _fluxibleJs.updateStore)(updatedState);
+      if (callback) callback();
+    }
+  }].concat(payload));
+}
 
 function connect(mapStatesToProps, definedMutations) {
   return function (WrappedComponent) {
@@ -59,17 +74,11 @@ function connect(mapStatesToProps, definedMutations) {
         value: function render() {
           return _react2.default.createElement(WrappedComponent, _extends({}, this.props, mapStatesToProps ? mapStatesToProps((0, _fluxibleJs.getStore)()) : {}, definedMutations ? Object.keys(definedMutations).reduce(function (mutationCollection, mutation) {
             return _extends({}, mutationCollection, _defineProperty({}, mutation, function () {
-              for (var _len = arguments.length, payload = Array(_len), _key = 0; _key < _len; _key++) {
-                payload[_key] = arguments[_key];
+              for (var _len2 = arguments.length, payload = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+                payload[_key2] = arguments[_key2];
               }
 
-              return definedMutations[mutation].apply(definedMutations, [{
-                getStore: _fluxibleJs.getStore,
-                updateStore: function updateStore(updatedState, callback) {
-                  (0, _fluxibleJs.updateStore)(updatedState);
-                  if (callback) callback();
-                }
-              }].concat(payload));
+              return dispatch.apply(undefined, [definedMutations[mutation]].concat(payload));
             }));
           }, {}) : {}));
         }

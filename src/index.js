@@ -3,6 +3,19 @@
 import { updateStore, addUpdateListener, getStore } from 'fluxible-js';
 import React from 'react';
 
+export function dispatch (mutation, ...payload) {
+  return mutation(
+    {
+      getStore,
+      updateStore: (updatedState, callback) => {
+        updateStore(updatedState);
+        if (callback) callback();
+      }
+    },
+    ...payload
+  );
+}
+
 export function connect (mapStatesToProps, definedMutations) {
   return WrappedComponent =>
     class Wrapper extends React.Component {
@@ -34,18 +47,7 @@ export function connect (mapStatesToProps, definedMutations) {
               ? Object.keys(definedMutations).reduce((mutationCollection, mutation) => {
                   return {
                     ...mutationCollection,
-                    [mutation]: (...payload) => {
-                      return definedMutations[mutation](
-                        {
-                          getStore,
-                          updateStore: (updatedState, callback) => {
-                            updateStore(updatedState);
-                            if (callback) callback();
-                          }
-                        },
-                        ...payload
-                      );
-                    }
+                    [mutation]: (...payload) => dispatch(definedMutations[mutation], ...payload)
                   };
                 }, {})
               : {})}
