@@ -28,12 +28,23 @@ export function dispatch (mutation, ...payload) {
  */
 export function connect (mapStatesToProps, definedMutations) {
   return WrappedComponent => {
+    // we only want to compute mutations once
+    const mutations = {};
+
+    if (definedMutations) {
+      const mutationKeys = Object.keys(definedMutations);
+
+      for (let a = 0; a < mutationKeys.length; a++) {
+        mutations[mutationKeys[a]] = (...payload) =>
+          dispatch(definedMutations[mutationKeys[a]], ...payload);
+      }
+    }
+
     class Wrapper extends React.Component {
       constructor (props) {
         super(props);
-
         this.state = {
-          count: 1
+          count: 0
         };
 
         this.removeListener = addUpdateListener(() => {
@@ -43,27 +54,18 @@ export function connect (mapStatesToProps, definedMutations) {
         });
       }
 
-      componentWillUnmount () {
+      componentWillUnmount = () => {
         // clean update listener before we unmount.
         this.removeListener();
-      }
+      };
 
-      render () {
-        return (
-          <WrappedComponent
-            {...this.props}
-            {...(mapStatesToProps ? mapStatesToProps(getStore()) : {})}
-            {...(definedMutations
-              ? Object.keys(definedMutations).reduce((mutationCollection, mutation) => {
-                  return {
-                    ...mutationCollection,
-                    [mutation]: (...payload) => dispatch(definedMutations[mutation], ...payload)
-                  };
-                }, {})
-              : {})}
-          />
-        );
-      }
+      render = () => (
+        <WrappedComponent
+          {...this.props}
+          {...(mapStatesToProps ? mapStatesToProps(getStore()) : {})}
+          {...mutations}
+        />
+      );
     }
 
     return redefineStatics(Wrapper, WrappedComponent);
