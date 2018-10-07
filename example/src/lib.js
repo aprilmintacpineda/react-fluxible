@@ -73,7 +73,7 @@ function connect(mapStatesToProps, definedMutations) {
           count: 0
         };
       },
-      componentDidMount: function componentDidMount(props) {
+      componentDidMount: function componentDidMount() {
         var _this = this;
 
         this.removeListener = (0, _fluxibleJs.addUpdateListener)(function () {
@@ -84,7 +84,7 @@ function connect(mapStatesToProps, definedMutations) {
       },
       componentWillUnmount: function componentWillUnmount() {
         // clean update listener before we unmount.
-        this.removeListener();
+        if (this.removeListener) this.removeListener();
       },
       render: function render() {
         return _react.default.createElement(WrappedComponent, _extends({}, this.props, mapStatesToProps ? mapStatesToProps((0, _fluxibleJs.getStore)()) : {}, mutations));

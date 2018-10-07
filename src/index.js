@@ -48,7 +48,7 @@ export function connect (mapStatesToProps, definedMutations) {
             count: 0
           };
         },
-        componentDidMount (props) {
+        componentDidMount () {
           this.removeListener = addUpdateListener(() => {
             this.setState({
               count: this.state.count + 1
@@ -57,7 +57,7 @@ export function connect (mapStatesToProps, definedMutations) {
         },
         componentWillUnmount () {
           // clean update listener before we unmount.
-          this.removeListener();
+          if (this.removeListener) this.removeListener();
         },
         render () {
           return (
