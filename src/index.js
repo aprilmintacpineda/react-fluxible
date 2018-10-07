@@ -2,6 +2,7 @@
 
 import { updateStore, addUpdateListener, getStore } from 'fluxible-js';
 import React from 'react';
+import createClass from 'create-react-class';
 import redefineStatics from 'redefine-statics-js';
 
 /**
@@ -40,34 +41,35 @@ export function connect (mapStatesToProps, definedMutations) {
       }
     }
 
-    class Wrapper extends React.Component {
-      constructor (props) {
-        super(props);
-        this.state = {
-          count: 0
-        };
-
-        this.removeListener = addUpdateListener(() => {
-          this.setState({
-            count: this.state.count + 1
+    return redefineStatics(
+      createClass({
+        getInitialState () {
+          return {
+            count: 0
+          };
+        },
+        componentDidMount (props) {
+          this.removeListener = addUpdateListener(() => {
+            this.setState({
+              count: this.state.count + 1
+            });
           });
-        });
-      }
-
-      componentWillUnmount = () => {
-        // clean update listener before we unmount.
-        this.removeListener();
-      };
-
-      render = () => (
-        <WrappedComponent
-          {...this.props}
-          {...(mapStatesToProps ? mapStatesToProps(getStore()) : {})}
-          {...mutations}
-        />
-      );
-    }
-
-    return redefineStatics(Wrapper, WrappedComponent);
+        },
+        componentWillUnmount () {
+          // clean update listener before we unmount.
+          this.removeListener();
+        },
+        render () {
+          return (
+            <WrappedComponent
+              {...this.props}
+              {...(mapStatesToProps ? mapStatesToProps(getStore()) : {})}
+              {...mutations}
+            />
+          );
+        }
+      }),
+      WrappedComponent
+    );
   };
 }

@@ -10,6 +10,7 @@
     "package.json"
   ],
   "dependencies": {
+    "create-react-class": "^15.6.3",
     "fluxible-js": "^2.1.1",
     "react": "^16.5.1",
     "redefine-statics-js": "^1.1.2"
