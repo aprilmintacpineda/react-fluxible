@@ -70,24 +70,25 @@ function connect(mapStatesToProps, definedMutations) {
     return (0, _redefineStaticsJs.default)((0, _createReactClass.default)({
       getInitialState: function getInitialState() {
         return {
-          count: 0
+          count: 0,
+          mappedStates: mapStatesToProps ? mapStatesToProps((0, _fluxibleJs.getStore)()) : {}
         };
       },
-      componentDidMount: function componentDidMount() {
+      componentWillMount: function componentWillMount() {
         var _this = this;
 
         this.removeListener = (0, _fluxibleJs.addUpdateListener)(function () {
           _this.setState({
-            count: _this.state.count + 1
+            count: _this.state.count + 1,
+            mappedStates: mapStatesToProps ? mapStatesToProps((0, _fluxibleJs.getStore)()) : {}
           });
         });
       },
       componentWillUnmount: function componentWillUnmount() {
-        // clean update listener before we unmount.
-        if (this.removeListener) this.removeListener();
+        this.removeListener();
       },
       render: function render() {
-        return _react.default.createElement(WrappedComponent, _extends({}, this.props, mapStatesToProps ? mapStatesToProps((0, _fluxibleJs.getStore)()) : {}, mutations));
+        return _react.default.createElement(WrappedComponent, _extends({}, this.props, this.state.mappedStates, mutations));
       }
     }), WrappedComponent);
   };

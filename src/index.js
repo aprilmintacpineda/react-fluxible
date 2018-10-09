@@ -45,28 +45,23 @@ export function connect (mapStatesToProps, definedMutations) {
       createClass({
         getInitialState () {
           return {
-            count: 0
+            count: 0,
+            mappedStates: mapStatesToProps ? mapStatesToProps(getStore()) : {}
           };
         },
-        componentDidMount () {
+        componentWillMount () {
           this.removeListener = addUpdateListener(() => {
             this.setState({
-              count: this.state.count + 1
+              count: this.state.count + 1,
+              mappedStates: mapStatesToProps ? mapStatesToProps(getStore()) : {}
             });
           });
         },
         componentWillUnmount () {
-          // clean update listener before we unmount.
-          if (this.removeListener) this.removeListener();
+          this.removeListener();
         },
         render () {
-          return (
-            <WrappedComponent
-              {...this.props}
-              {...(mapStatesToProps ? mapStatesToProps(getStore()) : {})}
-              {...mutations}
-            />
-          );
+          return <WrappedComponent {...this.props} {...this.state.mappedStates} {...mutations} />;
         }
       }),
       WrappedComponent
