@@ -131,6 +131,28 @@ Vice versa with `mapStateToProps` like so:
 export default connect(mapStateToProps)(MyComponent);
 ```
 
+##### Warnings
+
+**The returned object keys of `mapStateToProps` should not change**.
+
+i.e., make sure that the keys are always there and have been there from the start. Doing something like this will cause your component to fail in future updates:
+
+```js
+function mapStateToProps(storeState) {
+  const states = {};
+
+  if (somecondition) {
+    states.key = storeState.key;
+  }
+
+  return states;
+}
+```
+
+**Connected components that does not have `mapStateToProps` will not update**.
+
+Update listeners will only be called when a particular state that they are observing have been updated, if not, then they will not be update. Thus, having no `mapStateToProps` means that your connected component will not be updated due to store update since it is not and will not observe any states at all.
+
 ### Mutations
 
 When you call a mutation, you can provide arguments. Except you have to keep in mind that the first parameter that your function would receive is the object called `store`. The `store` has `getStore` and `updateStore` methods.

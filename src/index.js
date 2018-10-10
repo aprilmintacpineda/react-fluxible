@@ -6,7 +6,8 @@ import createClass from 'create-react-class';
 import redefineStatics from 'redefine-statics-js';
 
 /**
- * @param {Function} callback function that would be called sa the mutation handler. Should expect an object as the first parameter.
+ *
+ * @param {Function} callback function that would be called sa the mutation handler.
  * @param  {...any} payload to the callback function
  */
 export function dispatch (mutation, ...payload) {
@@ -25,7 +26,7 @@ export function dispatch (mutation, ...payload) {
 /**
  * @param {Function} Would receive the current store's state as the only argument. Should return an object of the states that you want to be accessible in the connected component.
  * @param {Object} You should define your action handlers here. Each methods would be called with an object (that has `updateStore` and `getStore` methods) as the first argument. The rest would be the arguments you passed to the call.
- * @return {Object} the react component.
+ * @return {Object} the inferno component.
  */
 export function connect (mapStatesToProps, definedMutations) {
   return WrappedComponent => {
@@ -44,24 +45,23 @@ export function connect (mapStatesToProps, definedMutations) {
     return redefineStatics(
       createClass({
         getInitialState () {
-          return {
-            count: 0,
-            mappedStates: mapStatesToProps ? mapStatesToProps(getStore()) : {}
-          };
-        },
-        componentWillMount () {
-          this.removeListener = addUpdateListener(() => {
-            this.setState({
-              count: this.state.count + 1,
-              mappedStates: mapStatesToProps ? mapStatesToProps(getStore()) : {}
-            });
-          });
+          if (mapStatesToProps) {
+            const mappedStates = mapStatesToProps(getStore());
+
+            this.removeListener = addUpdateListener(updatedStore => {
+              this.setState(mapStatesToProps(updatedStore));
+            }, Object.keys(mappedStates));
+
+            return mappedStates;
+          }
+
+          return {};
         },
         componentWillUnmount () {
-          this.removeListener();
+          if (mapStatesToProps) this.removeListener();
         },
         render () {
-          return <WrappedComponent {...this.props} {...this.state.mappedStates} {...mutations} />;
+          return <WrappedComponent {...this.props} {...this.state} {...mutations} />;
         }
       }),
       WrappedComponent
