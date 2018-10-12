@@ -1,6 +1,6 @@
 /** @format */
 
-import { updateStore, addUpdateListener, getStore } from 'fluxible-js';
+import { updateStore, addObserver, getStore } from 'fluxible-js';
 import React from 'react';
 import createClass from 'create-react-class';
 import redefineStatics from 'redefine-statics-js';
@@ -48,20 +48,37 @@ export function connect (mapStatesToProps, definedMutations) {
           if (mapStatesToProps) {
             const mappedStates = mapStatesToProps(getStore());
 
-            this.removeListener = addUpdateListener(updatedStore => {
-              this.setState(mapStatesToProps(updatedStore));
+            this.removeListener = addObserver(updatedStore => {
+              this.setState(
+                definedMutations
+                  ? {
+                      ...this.props,
+                      ...mapStatesToProps(updatedStore),
+                      ...mutations
+                    }
+                  : {
+                      ...this.props,
+                      ...mapStatesToProps(updatedStore)
+                    }
+              );
             }, Object.keys(mappedStates));
 
-            return mappedStates;
+            return definedMutations
+              ? {
+                  ...this.props,
+                  ...mappedStates,
+                  ...mutations
+                }
+              : mappedStates;
           }
 
-          return {};
+          return definedMutations ? mutations : {};
         },
         componentWillUnmount () {
-          if (mapStatesToProps) this.removeListener();
+          if (this.removeListener) this.removeListener();
         },
         render () {
-          return <WrappedComponent {...this.props} {...this.state} {...mutations} />;
+          return <WrappedComponent {...this.state} />;
         }
       }),
       WrappedComponent
