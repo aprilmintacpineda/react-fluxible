@@ -52,12 +52,10 @@ export function connect (mapStatesToProps, definedMutations) {
               this.setState(
                 definedMutations
                   ? {
-                      ...this.props,
                       ...mapStatesToProps(updatedStore),
                       ...mutations
                     }
                   : {
-                      ...this.props,
                       ...mapStatesToProps(updatedStore)
                     }
               );
@@ -65,7 +63,6 @@ export function connect (mapStatesToProps, definedMutations) {
 
             return definedMutations
               ? {
-                  ...this.props,
                   ...mappedStates,
                   ...mutations
                 }
@@ -78,7 +75,7 @@ export function connect (mapStatesToProps, definedMutations) {
           if (this.removeListener) this.removeListener();
         },
         render () {
-          return <WrappedComponent {...this.state} />;
+          return <WrappedComponent {...this.props} {...this.state} />;
         }
       }),
       WrappedComponent

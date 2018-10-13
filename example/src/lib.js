@@ -16,6 +16,8 @@ var _redefineStaticsJs = _interopRequireDefault(require("redefine-statics-js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -77,9 +79,9 @@ function connect(mapStatesToProps, definedMutations) {
         if (mapStatesToProps) {
           var mappedStates = mapStatesToProps((0, _fluxibleJs.getStore)());
           this.removeListener = (0, _fluxibleJs.addObserver)(function (updatedStore) {
-            _this.setState(definedMutations ? _objectSpread({}, _this.props, mapStatesToProps(updatedStore), mutations) : _objectSpread({}, _this.props, mapStatesToProps(updatedStore)));
+            _this.setState(definedMutations ? _objectSpread({}, mapStatesToProps(updatedStore), mutations) : _objectSpread({}, mapStatesToProps(updatedStore)));
           }, Object.keys(mappedStates));
-          return definedMutations ? _objectSpread({}, this.props, mappedStates, mutations) : mappedStates;
+          return definedMutations ? _objectSpread({}, mappedStates, mutations) : mappedStates;
         }
 
         return definedMutations ? mutations : {};
@@ -88,7 +90,7 @@ function connect(mapStatesToProps, definedMutations) {
         if (this.removeListener) this.removeListener();
       },
       render: function render() {
-        return _react.default.createElement(WrappedComponent, this.state);
+        return _react.default.createElement(WrappedComponent, _extends({}, this.props, this.state));
       }
     }), WrappedComponent);
   };
