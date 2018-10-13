@@ -55,9 +55,7 @@ export function connect (mapStatesToProps, definedMutations) {
                       ...mapStatesToProps(updatedStore),
                       ...mutations
                     }
-                  : {
-                      ...mapStatesToProps(updatedStore)
-                    }
+                  : mapStatesToProps(updatedStore)
               );
             }, Object.keys(mappedStates));
 
