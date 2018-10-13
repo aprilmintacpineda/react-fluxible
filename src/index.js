@@ -2,7 +2,6 @@
 
 import { updateStore, addObserver, getStore } from 'fluxible-js';
 import React from 'react';
-import createClass from 'create-react-class';
 import redefineStatics from 'redefine-statics-js';
 
 /**
@@ -28,6 +27,7 @@ export function dispatch (mutation, ...payload) {
  * @param {Object} You should define your action handlers here. Each methods would be called with an object (that has `updateStore` and `getStore` methods) as the first argument. The rest would be the arguments you passed to the call.
  * @return {Object} the inferno component.
  */
+
 export function connect (mapStatesToProps, definedMutations) {
   return WrappedComponent => {
     // we only want to compute mutations once
@@ -42,41 +42,50 @@ export function connect (mapStatesToProps, definedMutations) {
       }
     }
 
-    return redefineStatics(
-      createClass({
-        getInitialState () {
-          if (mapStatesToProps) {
-            const mappedStates = mapStatesToProps(getStore());
+    function ConnectedComponent () {
+      const _this = this;
 
-            this.removeListener = addObserver(updatedStore => {
-              this.setState(
-                definedMutations
-                  ? {
-                      ...mapStatesToProps(updatedStore),
-                      ...mutations
-                    }
-                  : mapStatesToProps(updatedStore)
-              );
-            }, Object.keys(mappedStates));
+      if (mapStatesToProps) {
+        const mappedStates = mapStatesToProps(getStore());
 
-            return definedMutations
+        _this.removeListener = addObserver(updatedStore => {
+          _this.setState(
+            definedMutations
               ? {
-                  ...mappedStates,
+                  ...mapStatesToProps(updatedStore),
                   ...mutations
                 }
-              : mappedStates;
-          }
+              : mapStatesToProps(updatedStore)
+          );
+        }, Object.keys(mappedStates));
 
-          return definedMutations ? mutations : {};
-        },
-        componentWillUnmount () {
-          if (this.removeListener) this.removeListener();
-        },
-        render () {
-          return <WrappedComponent {...this.props} {...this.state} />;
-        }
-      }),
-      WrappedComponent
-    );
+        _this.state = definedMutations
+          ? {
+              ...mappedStates,
+              ...mutations
+            }
+          : mappedStates;
+      } else {
+        _this.state = definedMutations ? mutations : {};
+      }
+
+      _this.componentWillUnmount = function () {
+        if (_this.removeListener) _this.removeListener();
+      };
+
+      // eslint-disable-next-line
+      _this.render = function() {
+        return <WrappedComponent {..._this.props} {..._this.state} />;
+      };
+
+      return _this;
+    }
+
+    ConnectedComponent.prototype = React.Component.prototype;
+    ConnectedComponent.prototype.constructor = ConnectedComponent;
+
+    redefineStatics(ConnectedComponent, WrappedComponent);
+
+    return ConnectedComponent;
   };
 }

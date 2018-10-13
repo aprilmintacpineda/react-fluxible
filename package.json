@@ -10,10 +10,9 @@
     "package.json"
   ],
   "dependencies": {
-    "create-react-class": "^15.6.3",
     "fluxible-js": "^3.1.1",
     "react": "^16.5.2",
-    "redefine-statics-js": "^1.1.2"
+    "redefine-statics-js": "^2.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
