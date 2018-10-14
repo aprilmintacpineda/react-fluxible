@@ -42,8 +42,9 @@ export function connect (mapStatesToProps, definedMutations) {
       }
     }
 
-    function ConnectedComponent () {
+    function ConnectedComponent (props) {
       const _this = this;
+      _this.props = props;
 
       if (mapStatesToProps) {
         const mappedStates = mapStatesToProps(getStore());
