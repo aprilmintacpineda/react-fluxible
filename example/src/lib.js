@@ -16,10 +16,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 /**
  *
  * @param {Function} callback function that would be called sa the mutation handler.
@@ -48,53 +44,53 @@ function dispatch(mutation) {
 function connect(mapStatesToProps, definedMutations) {
   return function (WrappedComponent) {
     // we only want to compute mutations once
-    var mutations = {};
+    var mutations;
 
     if (definedMutations) {
-      (function () {
-        var mutationKeys = Object.keys(definedMutations);
+      mutations = {};
+      Object.keys(definedMutations).forEach(function (key) {
+        mutations[key] = function () {
+          for (var _len2 = arguments.length, payload = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+            payload[_key2] = arguments[_key2];
+          }
 
-        var _loop = function _loop(a) {
-          mutations[mutationKeys[a]] = function () {
-            for (var _len2 = arguments.length, payload = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-              payload[_key2] = arguments[_key2];
-            }
-
-            return dispatch.apply(void 0, [definedMutations[mutationKeys[a]]].concat(payload));
-          };
+          return dispatch.apply(void 0, [definedMutations[key]].concat(payload));
         };
-
-        for (var a = 0; a < mutationKeys.length; a++) {
-          _loop(a);
-        }
-      })();
+      });
     }
 
     function ConnectedComponent(props) {
       var _this = this;
 
-      _this.props = props;
+      this.props = props;
 
       if (mapStatesToProps) {
-        var mappedStates = mapStatesToProps((0, _fluxibleJs.getStore)());
-        _this.removeListener = (0, _fluxibleJs.addObserver)(function (updatedStore) {
-          _this.setState(definedMutations ? _objectSpread({}, mapStatesToProps(updatedStore), mutations) : mapStatesToProps(updatedStore));
-        }, Object.keys(mappedStates));
-        _this.state = definedMutations ? _objectSpread({}, mappedStates, mutations) : mappedStates;
-      } else {
-        _this.state = definedMutations ? mutations : {};
+        this.removeListener = (0, _fluxibleJs.addObserver)(function () {
+          _this.setState({
+            count: _this.state.count + 1
+          });
+        }, Object.keys(mapStatesToProps((0, _fluxibleJs.getStore)())));
+        this.state = {
+          count: 0
+        };
       }
 
-      _this.componentWillUnmount = function () {
+      this.componentWillUnmount = function () {
         if (_this.removeListener) _this.removeListener();
       }; // eslint-disable-next-line
 
 
-      _this.render = function () {
-        return _react.default.createElement(WrappedComponent, _extends({}, _this.props, _this.state));
+      this.render = function () {
+        if (mapStatesToProps && mutations) {
+          return _react.default.createElement(WrappedComponent, _extends({}, _this.props, mutations, mapStatesToProps((0, _fluxibleJs.getStore)())));
+        } else if (mapStatesToProps) {
+          return _react.default.createElement(WrappedComponent, _extends({}, _this.props, mapStatesToProps((0, _fluxibleJs.getStore)())));
+        }
+
+        return _react.default.createElement(WrappedComponent, _extends({}, _this.props, mutations));
       };
 
-      return _this;
+      return this;
     }
 
     ConnectedComponent.prototype = _react.default.Component.prototype;
