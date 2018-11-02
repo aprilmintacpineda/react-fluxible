@@ -1,7 +1,7 @@
 /** @format */
 
 import React from 'react';
-import { connect } from './lib';
+import { mapStatesToProps } from './lib';
 
 class Username extends React.Component {
   render () {
@@ -14,6 +14,6 @@ class Username extends React.Component {
   }
 }
 
-export default connect(state => ({
+export default mapStatesToProps(Username, state => ({
   username: state.username
-}))(Username);
+}));

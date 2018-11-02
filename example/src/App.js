@@ -1,12 +1,12 @@
 /** @format */
 
 import React from 'react';
-import { connect } from './lib';
+import { updateStore, getStore } from 'fluxible-js';
 import Notes from './Notes';
 import Todos from './Todos';
 import Username from './Username';
 
-class App extends React.Component {
+export default class App extends React.Component {
   constructor (props) {
     super(props);
 
@@ -25,7 +25,11 @@ class App extends React.Component {
         <form
           onSubmit={ev => {
             ev.preventDefault();
-            this.props.changeUsername(this.state.newUsername);
+
+            updateStore({
+              username: this.state.newUsername
+            });
+
             this.setState({
               ...this.state,
               newUsername: ''
@@ -50,7 +54,14 @@ class App extends React.Component {
         <form
           onSubmit={ev => {
             ev.preventDefault();
-            this.props.addTodo(this.state.newTodoValue);
+
+            updateStore({
+              todos: getStore().todos.concat({
+                value: this.state.newTodoValue,
+                isDone: false
+              })
+            });
+
             this.setState({
               ...this.state,
               newTodoValue: ''
@@ -74,23 +85,3 @@ class App extends React.Component {
     );
   }
 }
-
-export default connect(
-  null,
-  {
-    changeUsername (store, username) {
-      store.updateStore({
-        username
-      });
-    },
-
-    addTodo (store, value) {
-      store.updateStore({
-        todos: store.getStore().todos.concat({
-          value,
-          isDone: false
-        })
-      });
-    }
-  }
-)(App);
