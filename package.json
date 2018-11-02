@@ -1,6 +1,6 @@
 {
   "name": "react-fluxible",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Smaller, faster, better. A small state management system that supports the idea of asynchronous actions and state persistence out of the box. Built on top of fluxible-js.",
   "main": "lib/index.js",
   "files": [
