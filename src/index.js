@@ -5,12 +5,14 @@ import React from 'react';
 import redefineStatics from 'redefine-statics-js';
 
 export function mapStatesToProps (TargetComponent, callback) {
-  function ConnectedComponent () {
-    let mappedStates = callback(getStore());
+  function ConnectedComponent (props) {
+    this.props = props;
 
     this.state = {
       count: 0
     };
+
+    let mappedStates = callback(getStore());
 
     this.componentWillUnmount = addObserver(() => {
       mappedStates = callback(getStore());
@@ -21,6 +23,8 @@ export function mapStatesToProps (TargetComponent, callback) {
 
     // eslint-disable-next-line
     this.render = () => <TargetComponent {...this.props} {...mappedStates} />;
+
+    return this;
   }
 
   ConnectedComponent.prototype = React.Component.prototype;

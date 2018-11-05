@@ -18,13 +18,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function mapStatesToProps(TargetComponent, callback) {
-  function ConnectedComponent() {
+  function ConnectedComponent(props) {
     var _this = this;
 
-    var mappedStates = callback((0, _fluxibleJs.getStore)());
+    this.props = props;
     this.state = {
       count: 0
     };
+    var mappedStates = callback((0, _fluxibleJs.getStore)());
     this.componentWillUnmount = (0, _fluxibleJs.addObserver)(function () {
       mappedStates = callback((0, _fluxibleJs.getStore)());
 
@@ -36,6 +37,8 @@ function mapStatesToProps(TargetComponent, callback) {
     this.render = function () {
       return _react.default.createElement(TargetComponent, _extends({}, _this.props, mappedStates));
     };
+
+    return this;
   }
 
   ConnectedComponent.prototype = _react.default.Component.prototype;
