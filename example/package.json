@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "fluxible-js": "^3.2.0",
-    "react": "^16.6.0",
-    "react-dom": "^16.6.0",
-    "react-scripts": "2.0.5"
+    "fluxible-js": "^3.4.0",
+    "react": "^16.6.1",
+    "react-dom": "^16.6.1",
+    "react-scripts": "2.1.1"
   },
   "scripts": {
     "reinstallNodeModules": "rm -rf package-lock.json node_modules && npm i",
