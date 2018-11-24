@@ -1,6 +1,6 @@
 /** @format */
 
-import { addObserver, getStore } from 'fluxible-js';
+import { addObserver, store } from 'fluxible-js';
 import React from 'react';
 import redefineStatics from 'redefine-statics-js';
 
@@ -12,10 +12,10 @@ export function mapStatesToProps (WrappedComponent, callback) {
       count: 0
     };
 
-    let mappedStates = callback(getStore());
+    let mappedStates = callback(store);
 
     this.componentWillUnmount = addObserver(() => {
-      mappedStates = callback(getStore());
+      mappedStates = callback(store);
       this.setState({
         count: this.state.count + 1
       });

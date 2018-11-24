@@ -23,9 +23,9 @@ function mapStatesToProps(WrappedComponent, callback) {
     this.state = {
       count: 0
     };
-    var mappedStates = callback((0, _fluxibleJs.getStore)());
+    var mappedStates = callback(_fluxibleJs.store);
     this.componentWillUnmount = (0, _fluxibleJs.addObserver)(function () {
-      mappedStates = callback((0, _fluxibleJs.getStore)());
+      mappedStates = callback(_fluxibleJs.store);
 
       _this.setState({
         count: _this.state.count + 1

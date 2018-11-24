@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { mapStatesToProps } from './lib';
-import { updateStore, getStore } from 'fluxible-js';
+import { updateStore, store } from 'fluxible-js';
 
 class Todos extends React.Component {
   render () {
@@ -16,7 +16,7 @@ class Todos extends React.Component {
                 <span
                   onClick={() => {
                     updateStore({
-                      todos: getStore().todos.filter((_, index) => index !== i)
+                      todos: store.todos.filter((_, index) => index !== i)
                     });
                   }}
                   style={{
@@ -37,7 +37,7 @@ class Todos extends React.Component {
                   }}
                   onChange={ev => {
                     updateStore({
-                      todos: getStore().todos.map((todo, index) => {
+                      todos: store.todos.map((todo, index) => {
                         if (index !== i) return todo;
 
                         return {

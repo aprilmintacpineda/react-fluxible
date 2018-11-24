@@ -1,7 +1,7 @@
 /** @format */
 
 import React from 'react';
-import { updateStore, getStore } from 'fluxible-js';
+import { updateStore, store } from 'fluxible-js';
 import Notes from './Notes';
 import Todos from './Todos';
 import Username from './Username';
@@ -56,7 +56,7 @@ export default class App extends React.Component {
             ev.preventDefault();
 
             updateStore({
-              todos: getStore().todos.concat({
+              todos: store.todos.concat({
                 value: this.state.newTodoValue,
                 isDone: false
               })
