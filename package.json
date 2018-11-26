@@ -9,10 +9,10 @@
     "LICENSE",
     "package.json"
   ],
-  "dependencies": {
-    "fluxible-js": "^3.5.0",
-    "react": "^16.6.3",
-    "redefine-statics-js": "^2.0.1"
+  "peerDependencies": {
+    "fluxible-js": "~3.5",
+    "react": "~16",
+    "redefine-statics-js": "~2"
   },
   "devDependencies": {
     "@babel/core": "^7.1.6",
