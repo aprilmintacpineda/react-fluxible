@@ -2,7 +2,7 @@
 
 # react-fluxible
 
-Smaller, faster, better. A small state management system that supports the idea of asynchronous actions and state persistence out of the box. Built on top of [fluxible-js](https://github.com/aprilmintacpineda/fluxible-js). [See demo](https://aprilmintacpineda.github.io/react-fluxible/).
+ Connector for [react-js](https://github.com/facebook/react/) and [fluxible-js](https://github.com/aprilmintacpineda/fluxible-js). [See demo](https://aprilmintacpineda.github.io/react-fluxible/).
 
 # Install
 

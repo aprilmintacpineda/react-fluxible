@@ -1,7 +1,7 @@
 {
   "name": "react-fluxible",
   "version": "3.1.2",
-  "description": "Smaller, faster, better. A small state management system that supports the idea of asynchronous actions and state persistence out of the box. Built on top of fluxible-js.",
+  "description": " Connector for react-js and fluxible-js.",
   "main": "lib/index.js",
   "files": [
     "lib/*",
@@ -10,7 +10,7 @@
     "package.json"
   ],
   "peerDependencies": {
-    "fluxible-js": "~3.5",
+    "fluxible-js": "~4",
     "react": "~16",
     "redefine-statics-js": "~2"
   },
@@ -44,8 +44,9 @@
     "react-js",
     "fluxible-js",
     "state-management",
-    "store-management",
-    "stateful"
+    "state-pattern",
+    "asynchronous-state-management",
+    "synchronous-state-management"
   ],
   "author": "April Mintac Pineda",
   "license": "MIT"
