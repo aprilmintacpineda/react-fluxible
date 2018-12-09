@@ -2,8 +2,21 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import localforage from 'localforage';
 import { initializeStore } from 'fluxible-js';
+import App from './App';
+
+localforage.config({
+  driver: [
+    localforage.WEBSQL,
+    localforage.INDEXEDDB,
+    localforage.LOCALSTORAGE
+  ],
+  name: 'myApp',
+  version: '1.0',
+  storeName: 'asyncStorage',
+  description: 'react-fluxible example using asyncStorage'
+});
 
 initializeStore({
   initialStore: {
@@ -11,7 +24,7 @@ initializeStore({
     todos: []
   },
   persist: {
-    storage: window.localStorage,
+    asyncStorage: localforage,
     restore: savedStore => ({
       todos: savedStore.todos || []
     })
