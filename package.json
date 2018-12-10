@@ -10,9 +10,9 @@
     "package.json"
   ],
   "peerDependencies": {
-    "fluxible-js": "~4",
-    "react": "~16",
-    "redefine-statics-js": "~2"
+    "fluxible-js": "^4.2.2",
+    "react": "^16.6.3",
+    "redefine-statics-js": "^2.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.2.0",
