@@ -18,4 +18,5 @@ const codeMin = babelCore.transform(source, {
 
 fs.writeFileSync(path.join(__dirname, '/lib/index.js'), code, 'utf8');
 fs.writeFileSync(path.join(__dirname, '/lib/index.min.js'), codeMin, 'utf8');
-fs.writeFileSync(path.join(__dirname, '/example/src/lib.js'), code, 'utf8');
+fs.writeFileSync(path.join(__dirname, '/example-async/src/lib.js'), code, 'utf8');
+fs.writeFileSync(path.join(__dirname, '/example-sync/src/lib.js'), code, 'utf8');

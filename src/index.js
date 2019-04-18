@@ -1,7 +1,7 @@
 /** @format */
 
-import { addObserver, store } from 'fluxible-js';
 import React from 'react';
+import { addObserver, store } from 'fluxible-js';
 import redefineStatics from 'redefine-statics-js';
 
 export function mapStatesToProps (WrappedComponent, callback) {
@@ -9,20 +9,16 @@ export function mapStatesToProps (WrappedComponent, callback) {
     this.props = props;
 
     this.state = {
-      count: 0
+      mappedStates: callback(store)
     };
 
-    let mappedStates = callback(store);
-
     this.componentWillUnmount = addObserver(() => {
-      mappedStates = callback(store);
       this.setState({
-        count: this.state.count + 1
+        mappedStates: callback(store)
       });
-    }, Object.keys(mappedStates));
+    }, Object.keys(this.state.mappedStates));
 
-    // eslint-disable-next-line
-    this.render = () => <WrappedComponent {...this.props} {...mappedStates} />;
+    this.render = () => <WrappedComponent {...this.props} {...this.state.mappedStates} />;
 
     return this;
   }
