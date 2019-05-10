@@ -10,11 +10,8 @@ class Todos extends React.Component {
       <div>
         <h3>Todos component: Your todos (managed by inferno-fluxible)</h3>
         {
-          !this.props.asyncInitDone
-          ? <p>Please wait...</p>
-          : this.props.todos.length ? (
-          this.props.todos.map((todo, i) => {
-            return (
+          this.props.todos.length
+            ? this.props.todos.map((todo, i) => (
               <p key={i} className="done">
                 <span
                   onClick={() => {
@@ -53,17 +50,16 @@ class Todos extends React.Component {
                 />
                 {todo.isDone ? <s>{todo.value}</s> : todo.value}
               </p>
-            );
-          })
-        ) : (
-          <p>You have no todos.</p>
-        )}
+            ))
+          : (
+            <p>You have no todos.</p>
+          )
+        }
       </div>
     );
   }
 }
 
 export default mapStatesToProps(Todos, state => ({
-  todos: state.todos,
-  asyncInitDone: state.asyncInitDone
+  todos: state.todos
 }));

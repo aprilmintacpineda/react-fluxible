@@ -18,17 +18,22 @@ localforage.config({
   description: 'react-fluxible example using asyncStorage'
 });
 
-initializeStore({
-  initialStore: {
-    username: '',
-    todos: []
+initializeStore(
+  {
+    initialStore: {
+      username: '',
+      todos: []
+    },
+    persist: {
+      asyncStorage: localforage,
+      restore: savedStore => ({
+        todos: savedStore.todos || []
+      })
+    }
   },
-  persist: {
-    asyncStorage: localforage,
-    restore: savedStore => ({
-      todos: savedStore.todos || []
-    })
+  () => {
+    // eslint-disable-next-line
+    console.log('async init done.');
+    ReactDOM.render(<App />, document.getElementById('root'));
   }
-});
-
-ReactDOM.render(<App />, document.getElementById('root'));
+);
