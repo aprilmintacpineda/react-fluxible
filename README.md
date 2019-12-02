@@ -2,39 +2,52 @@
 
 # react-fluxible
 
- Connector for [react-js](https://github.com/facebook/react/) and [fluxible-js](https://github.com/aprilmintacpineda/fluxible-js). [See demo](https://aprilmintacpineda.github.io/react-fluxible/).
+Connector for [react-js](https://github.com/facebook/react/) and [fluxible-js](https://github.com/aprilmintacpineda/fluxible-js) which allows you to access the store inside your component. [See demo](https://aprilmintacpineda.github.io/react-fluxible/).
 
 # Install
 
-`npm i -s react-fluxible fluxible-js redefine-statics-js`
+```
+npm i -S react-fluxible fluxible-js
+```
+
+If you are going to use `withFluxibleStore` HOC you also need to:
+
+```
+npm i -S redefine-statics-js
+```
 
 # Usage
 
 ## Initialize store
 
+Refer to [fluxible-js docs](https://github.com/aprilmintacpineda/fluxible-js#usage) for more information on initialization.
+
+## Using hooks to connect your component to the store
+
 ```jsx
-import { initializeStore } from 'fluxible-js';
+import useFluxibleStore from 'react-fluxible/useFluxibleStore';
 
-initializeStore({
-  initialStore: {
-    user: {
-      name: 'Test User'
-    },
-    anotherState: 'value'
-  }
-});
+function MyComponent () {
+  const user = useFluxibleStore(states => ({
+    user: states.user
+  }));
 
-// rest of the app.
+  return (
+    <div>
+      <p>{user.name}</p>
+    </div>
+  );
+}
 ```
 
-Before you render your app, you _MUST_ call `initializeStore`. It expects an object as the only parameter, the object have a required property called `initialStore` which will be used as the initial value of the store.
+#### useFluxibleStore's parameters
 
-There's also the optional property called `persist` which _MUST_ also be an object containing two required properties. [Learn more about fluxible-js](https://github.com/aprilmintacpineda/fluxible-js#initialize-store).
+1. A function that will receive the current store and will have to return the state that the component needs. It is important that you only return the state that you want to use in that component because `useFluxibleStore` watches for changes so that updating other states that you don't need in the component will not cause the component to rerender.
 
-## :new: Connecting your components to the store
+## Using HOC to connect your component to the store
 
 ```jsx
-import { mapStatesToProps } from 'react-fluxible';
+import withFluxibleStore from 'react-fluxible/withFluxibleStore';
 
 class MyComponent extends Component {
   render() {
@@ -46,122 +59,15 @@ class MyComponent extends Component {
   }
 }
 
-export default mapStatesToProps(MyComponent, states => {
-  return {
-    user: state.user
-  };
-});
+export default withFluxibleStore(MyComponent, states => ({
+  user: state.user
+}));
 ```
 
-`mapStatesToProps` has two parameters. (1) The component itself. (2) A callback function that must return the states you want to be available as `props` in that component.
+#### withFluxibleStore's parameters
 
-## :new: Updating the store
-
-You can choose between using the [event bus](https://github.com/aprilmintacpineda/fluxible-js#event-bus) or calling [updateStore](https://github.com/aprilmintacpineda/fluxible-js#update-the-store) directly from the component.
-
-#### Using updateStore
-
-```jsx
-import { updateStore } from 'fluxible-js';
-import { mapStatesToProps } from 'react-fluxible';
-
-class MyComponent extends Component {
-  handleClick = () => {
-    updateStore({
-      anotherState: 'newValue'
-    });
-  };
-
-  render() {
-    return (
-      <div>
-        <p>{this.props.user.name}</p>
-        <button onClick={this.handleClick}>Click me</button>
-      </div>
-    );
-  }
-}
-
-export default mapStatesToProps(MyComponent, states => {
-  return {
-    user: state.user,
-    anotherState: state.anotherState
-  };
-});
-```
-
-You can also build a function yourself that would perform what you need to do.
-
-```jsx
-import { updateStore } from 'fluxible-js';
-import { mapStatesToProps } from 'react-fluxible';
-import { doSomething } from '../mutations';
-
-class MyComponent extends Component {
-  render() {
-    return (
-      <div>
-        <p>{this.props.user.name}</p>
-        <button onClick={doSomething}>Click me</button>
-      </div>
-    );
-  }
-}
-
-export default mapStatesToProps(MyComponent, states => {
-  return {
-    user: state.user,
-    anotherState: state.anotherState
-  };
-});
-```
-
-This is better compared to how `connect` used to do it. This is more flexible, manageable, and performant. You don't need to make a lot of function calls when you can simply import `updateStore` and `getStore` pretty much wherever you want. The only purpose of `mapStatesToProps` provided by `react-fluxible` is to make sure that the components receive the latest store when the store is updated.
-
-#### Using the event bus
-
-Somewhere in your source code, ideally before emitting this event:
-
-```js
-import { addEvent, updateStore } from 'fluxible-js';
-
-addEvent('my-event', payload => {
-  console.log(payload);
-
-  updateStore({
-    anotherState: payload
-  });
-});
-```
-
-On your component:
-
-```jsx
-import { emitEvent } from 'fluxible-js';
-import { mapStatesToProps } from 'react-fluxible';
-
-class MyComponent extends Component {
-  handleClick = () => {
-    emitEvent('my-event', 'newValue');
-  };
-
-  render() {
-    return (
-      <div>
-        <p>{this.props.user.name}</p>
-        <button onClick={this.handleClick}>Click me</button>
-      </div>
-    );
-  }
-}
-
-export default mapStatesToProps(MyComponent, states => {
-  return {
-    user: state.user,
-    anotherState: state.anotherState
-  };
-});
-```
+1. The component to connect to the store.
+2. A function that will receive the current store and will have to return the state that the component needs. It is important that you only return the state that you want to use in that component because `withFluxibleStore` watches for changes so that updating other states that you don't need in the component will not cause the component to rerender. All of the states you return will be available to the component's `this.props`, in the example above, it was `this.props.user`.
 
 # Contributing
 
