@@ -25,7 +25,7 @@ Refer to [fluxible-js docs](https://github.com/aprilmintacpineda/fluxible-js#usa
 ## Using hooks to connect your component to the store
 
 ```jsx
-import useFluxibleStore from 'react-fluxible/useFluxibleStore';
+import useFluxibleStore from 'react-fluxible/lib/useFluxibleStore';
 
 function MyComponent () {
   const user = useFluxibleStore(states => ({
@@ -47,7 +47,7 @@ function MyComponent () {
 ## Using HOC to connect your component to the store
 
 ```jsx
-import withFluxibleStore from 'react-fluxible/withFluxibleStore';
+import withFluxibleStore from 'react-fluxible/lib/withFluxibleStore';
 
 class MyComponent extends Component {
   render() {
