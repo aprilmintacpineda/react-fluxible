@@ -1,14 +1,14 @@
 /** @format */
 
 import React from 'react';
-import { mapStatesToProps } from './lib';
+import withFluxibleStore from './lib/withFluxibleStore';
 import { updateStore, store } from 'fluxible-js';
 
 class Todos extends React.Component {
   render () {
     return (
       <div>
-        <h3>Todos component: Your todos (managed by inferno-fluxible)</h3>
+        <h3>Todos component: Your todos (managed by react-fluxible)</h3>
         {
           this.props.todos.length
             ? this.props.todos.map((todo, i) => (
@@ -60,6 +60,6 @@ class Todos extends React.Component {
   }
 }
 
-export default mapStatesToProps(Todos, state => ({
+export default withFluxibleStore(Todos, state => ({
   todos: state.todos
 }));

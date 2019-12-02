@@ -4,7 +4,7 @@ import React from 'react';
 import { addObserver, store } from 'fluxible-js';
 import redefineStatics from 'redefine-statics-js';
 
-export function mapStatesToProps (WrappedComponent, callback) {
+function withFluxibleStore (WrappedComponent, callback) {
   function ConnectedComponent (props) {
     this.props = props;
 
@@ -30,3 +30,5 @@ export function mapStatesToProps (WrappedComponent, callback) {
 
   return ConnectedComponent;
 }
+
+export default withFluxibleStore;
