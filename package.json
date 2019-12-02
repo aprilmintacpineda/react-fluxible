@@ -2,7 +2,7 @@
   "name": "react-fluxible",
   "version": "4.0.0",
   "description": " Connector for react-js and fluxible-js.",
-  "main": "lib/index.js",
+  "main": "lib/",
   "files": [
     "lib/*",
     "README.md",
