@@ -62,7 +62,8 @@ import useFluxibleStore from 'react-fluxible/lib/useFluxibleStore';
 
 function MyComponent () {
   const mapStatesCallback = React.useCallback(
-    states => ({ user: states.user })
+    states => ({ user: states.user }),
+    []
   );
 
   const user = useFluxibleStore(mapStatesCallback);
