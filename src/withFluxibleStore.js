@@ -4,21 +4,17 @@ import React from 'react';
 import { addObserver, store } from 'fluxible-js';
 import redefineStatics from 'redefine-statics-js';
 
-function withFluxibleStore (WrappedComponent, callback) {
-  function ConnectedComponent (props) {
+function withFluxibleStore(WrappedComponent, callback) {
+  function ConnectedComponent(props) {
     this.props = props;
+    this.state = callback(store);
 
-    this.state = {
-      mappedStates: callback(store)
-    };
-
+    // addObserver returns a function for cleanup
     this.componentWillUnmount = addObserver(() => {
-      this.setState({
-        mappedStates: callback(store)
-      });
-    }, Object.keys(this.state.mappedStates));
+      this.setState(callback(store));
+    }, Object.keys(this.state));
 
-    this.render = () => <WrappedComponent {...this.props} {...this.state.mappedStates} />;
+    this.render = () => <WrappedComponent {...this.props} {...this.state} />;
 
     return this;
   }
