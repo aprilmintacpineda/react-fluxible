@@ -1,3 +1,5 @@
+/** @format */
+
 import { useState, useEffect } from 'react';
 import { addObserver, store } from 'fluxible-js';
 

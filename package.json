@@ -34,7 +34,10 @@
   "scripts": {
     "reinstallNodeModules": "rm -rf package-lock.json node_modules && npm i",
     "test": "jest",
-    "build": "node build.js"
+    "build": "node build.js",
+    "eslint": "eslint \"src/**/*.js\" --fix",
+    "prettier": "prettier \"src/**/*.js\" --write",
+    "lint": "npm run prettier && npm run eslint"
   },
   "repository": {
     "type": "git",

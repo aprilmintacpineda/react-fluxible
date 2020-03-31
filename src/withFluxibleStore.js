@@ -4,8 +4,8 @@ import React from 'react';
 import { addObserver, store } from 'fluxible-js';
 import redefineStatics from 'redefine-statics-js';
 
-function withFluxibleStore(WrappedComponent, callback) {
-  function ConnectedComponent(props) {
+function withFluxibleStore (WrappedComponent, callback) {
+  function ConnectedComponent (props) {
     this.props = props;
     this.state = callback(store);
 
