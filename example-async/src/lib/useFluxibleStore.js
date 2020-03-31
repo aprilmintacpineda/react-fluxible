@@ -7,6 +7,7 @@ var _react = require("react");
 
 var _fluxibleJs = require("fluxible-js");
 
+/** @format */
 function useFluxibleStore(mapStates) {
   var _useState = (0, _react.useState)(function () {
     return mapStates(_fluxibleJs.store);

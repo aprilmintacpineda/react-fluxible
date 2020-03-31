@@ -25,7 +25,7 @@ function withFluxibleStore(WrappedComponent, callback) {
     }, Object.keys(this.state));
 
     this.render = function () {
-      return _react["default"].createElement(WrappedComponent, _extends({}, _this.props, _this.state));
+      return /*#__PURE__*/_react["default"].createElement(WrappedComponent, _extends({}, _this.props, _this.state));
     };
 
     return this;
