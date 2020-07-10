@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "fluxible-js": "^4.4.2",
-    "localforage": "^1.7.3",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-scripts": "3.2.0",
+    "fluxible-js": "^4.4.5",
+    "localforage": "^1.7.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "^3.4.1",
     "redefine-statics-js": "^2.0.2"
   },
   "scripts": {
