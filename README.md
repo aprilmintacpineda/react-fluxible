@@ -45,9 +45,9 @@ It does not set, reset or update the store, it only does the following:
 
 ## The following applies for useFluxibleStore hook only
 
-#### react-fluxible does not care if your mapStatesCallback changes
+#### Changing the listener by updating your mapStates callback
 
-`mapStatesCallback` should actually NEVER change. Ideally, you should use `React.useCallback`, however, `useFluxibleStore` does not really do anything even when `mapStatesCallback` changes.
+Since, version 4.1.0, you can update your mapStates callback to change what state values your component listens to. See example on the usage section.
 
 # Usage
 
@@ -57,20 +57,55 @@ Refer to [fluxible-js docs](https://github.com/aprilmintacpineda/fluxible-js#usa
 
 ## Using hooks to connect your component to the store
 
+#### Static mapStates callback
+
 ```jsx
 import useFluxibleStore from 'react-fluxible/lib/useFluxibleStore';
 
-function MyComponent () {
-  const mapStatesCallback = React.useCallback(
-    states => ({ user: states.user }),
-    []
-  );
+function mapStates ({ user }) {
+  return { user };
+}
 
-  const user = useFluxibleStore(mapStatesCallback);
+function MyComponent () {
+  const { user } = useFluxibleStore(mapStates);
 
   return (
     <div>
       <p>{user.name}</p>
+    </div>
+  );
+}
+```
+
+#### Dynamic mapStates callback
+
+It is important that you use `useCallback` hook in order to prevent `useFluxibleStore` hook from changing the listener every time your component updates. You only want it to change when it has to change.
+
+```jsx
+import useFluxibleStore from 'react-fluxible/lib/useFluxibleStore';
+
+function MyComponent ({ isLoggedIn }) {
+  const mapStates = React.useCallback(states => {
+    if (isLoggedIn) {
+      return {
+        user: states.user,
+        notifications: states.notifications,
+        token: states.token
+      };
+    }
+
+    return {
+      user: states.tempUser
+    };
+  }, [isLoggedIn]);
+
+  const myStates = useFluxibleStore(mapStates);
+
+  console.log(myStates);
+
+  return (
+    <div>
+      <p>Check out the console!</p>
     </div>
   );
 }

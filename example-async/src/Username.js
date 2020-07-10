@@ -3,10 +3,12 @@
 import React from 'react';
 import useFluxibleStore from './lib/useFluxibleStore';
 
+function mapStates ({ username }) {
+  return { username };
+}
+
 function Username () {
-  const { username } = useFluxibleStore(state => ({
-    username: state.username
-  }));
+  const { username } = useFluxibleStore(mapStates);
 
   return (
     <div>

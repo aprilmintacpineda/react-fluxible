@@ -12,7 +12,7 @@ function useFluxibleStore (mapStates) {
     return addObserver(() => {
       setState(mapStates(store));
     }, Object.keys(mapStates(store)));
-  }, []); // eslint-disable-line
+  }, [mapStates]);
 
   return states;
 }

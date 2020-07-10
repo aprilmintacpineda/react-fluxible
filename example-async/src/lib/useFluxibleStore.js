@@ -21,8 +21,7 @@ function useFluxibleStore(mapStates) {
     return (0, _fluxibleJs.addObserver)(function () {
       setState(mapStates(_fluxibleJs.store));
     }, Object.keys(mapStates(_fluxibleJs.store)));
-  }, []); // eslint-disable-line
-
+  }, [mapStates]);
   return states;
 }
 
