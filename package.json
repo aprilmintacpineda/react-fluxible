@@ -1,6 +1,6 @@
 {
   "name": "react-fluxible",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "description": " Connector for react-js and fluxible-js.",
   "main": "lib/",
   "files": [
