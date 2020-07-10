@@ -9,8 +9,11 @@
       "jsx": true
     }
   },
-  "extends": ["plugin:react/recommended"],
+  "extends": ["plugin:react/recommended", "plugin:react-hooks/recommended"],
+  "plugins": ["react-hooks"],
   "rules": {
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "error",
     "react/display-name": 0,
     "react/prop-types": 0,
     "no-duplicate-imports": [
