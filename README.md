@@ -95,7 +95,7 @@ function MyComponent ({ isLoggedIn }) {
     }
 
     return {
-      user: states.tempUser
+      defaultUser: states.defaultUser
     };
   }, [isLoggedIn]);
 
