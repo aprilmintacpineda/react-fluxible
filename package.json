@@ -44,6 +44,10 @@
     "type": "git",
     "url": "git@gh_personal:aprilmintacpineda/react-fluxible.git"
   },
+  "bugs": {
+    "url": "https://github.com/aprilmintacpineda/react-fluxible/issues"
+  },
+  "homepage": "https://github.com/aprilmintacpineda/react-fluxible#readme",
   "keywords": [
     "react-js",
     "fluxible-js",
