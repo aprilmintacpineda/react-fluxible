@@ -57,8 +57,5 @@
     "synchronous-state-management"
   ],
   "author": "April Mintac Pineda",
-  "license": "MIT",
-  "dependencies": {
-    "fluxible-js": "^5.0.3"
-  }
+  "license": "MIT"
 }
