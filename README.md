@@ -6,7 +6,7 @@ Connector for [react-js](https://github.com/facebook/react/) and [fluxible-js](h
 
 # Change logs
 
-For the change logs, please see the [relesae notes](https://github.com/aprilmintacpineda/react-fluxible/releases).
+For the change logs, please see the [release notes](https://github.com/aprilmintacpineda/react-fluxible/releases).
 
 # Install
 
