@@ -1,18 +1,32 @@
 /** @format */
 
-import { useState, useEffect } from 'react';
+import React from 'react';
 import { addObserver, store } from 'fluxible-js';
 
 function useFluxibleStore (mapStates) {
-  const [states, setState] = useState(() => mapStates(store));
+  const [states, setState] = React.useState(() => mapStates(store));
 
-  // this should only run on didMount and unmount
-  useEffect(() => {
-    // addObserver returns a callback for cleanup
-    return addObserver(() => {
-      setState(mapStates(store));
-    }, Object.keys(mapStates(store)));
-  }, [mapStates]);
+  /**
+   * useEffect seems to be delayed causing
+   * causing the observer to be registered late.
+   * We want to register it as soon as this hook gets called
+  */
+  const removeObserver = React.useMemo(
+    () => addObserver(
+      () => {
+        setState(mapStates(store));
+      },
+      Object.keys(mapStates(store))
+    ),
+    [mapStates]
+  );
+
+  /**
+   * We can then just clean it up later down
+   * the line when the component who called this hook
+   * gets unmounted.
+   */
+  React.useEffect(() => removeObserver, [removeObserver]);
 
   return states;
 }
