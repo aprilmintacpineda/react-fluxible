@@ -4,6 +4,10 @@
 
 Connector for [react-js](https://github.com/facebook/react/) and [fluxible-js](https://github.com/aprilmintacpineda/fluxible-js) which allows you to access the store inside your components and rerender your component when the store changes. [See demo](https://aprilmintacpineda.github.io/react-fluxible/).
 
+# Change logs
+
+For the change logs, please see the [relesae notes](https://github.com/aprilmintacpineda/react-fluxible/releases).
+
 # Install
 
 ```
