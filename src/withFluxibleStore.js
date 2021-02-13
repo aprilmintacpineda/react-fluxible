@@ -1,7 +1,5 @@
-/** @format */
-
-import React from 'react';
 import { addObserver, store } from 'fluxible-js';
+import React from 'react';
 import redefineStatics from 'redefine-statics-js';
 
 function withFluxibleStore (WrappedComponent, callback) {
@@ -14,7 +12,9 @@ function withFluxibleStore (WrappedComponent, callback) {
       this.setState(callback(store));
     }, Object.keys(this.state));
 
-    this.render = () => <WrappedComponent {...this.props} {...this.state} />;
+    this.render = () => (
+      <WrappedComponent {...this.props} {...this.state} />
+    );
 
     return this;
   }

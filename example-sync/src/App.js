@@ -1,7 +1,5 @@
-/** @format */
-
-import React from 'react';
 import { updateStore, store } from 'fluxible-js';
+import React from 'react';
 import Notes from './Notes';
 import Todos from './Todos';
 import Username from './Username';
@@ -21,7 +19,9 @@ export default class App extends React.Component {
       <div className="App">
         <Notes />
         <hr />
-        <p>This data is store internally as state of this component.</p>
+        <p>
+          This data is store internally as state of this component.
+        </p>
         <form
           onSubmit={ev => {
             ev.preventDefault();
@@ -34,7 +34,8 @@ export default class App extends React.Component {
               ...this.state,
               newUsername: ''
             });
-          }}>
+          }}
+        >
           <input
             type="text"
             value={this.state.newUsername}
@@ -50,7 +51,9 @@ export default class App extends React.Component {
         </form>
         <hr />
         <h3>Add todo</h3>
-        <p>This data is managed as internal state of this component.</p>
+        <p>
+          This data is managed as internal state of this component.
+        </p>
         <form
           onSubmit={ev => {
             ev.preventDefault();
@@ -66,7 +69,8 @@ export default class App extends React.Component {
               ...this.state,
               newTodoValue: ''
             });
-          }}>
+          }}
+        >
           <input
             type="text"
             value={this.state.newTodoValue}

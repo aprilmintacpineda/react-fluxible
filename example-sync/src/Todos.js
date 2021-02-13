@@ -1,14 +1,14 @@
-/** @format */
-
+import { updateStore, store } from 'fluxible-js';
 import React from 'react';
 import withFluxibleStore from './lib/withFluxibleStore';
-import { updateStore, store } from 'fluxible-js';
 
 class Todos extends React.Component {
   render () {
     return (
       <div>
-        <h3>Todos component: Your todos (managed by react-fluxible)</h3>
+        <h3>
+          Todos component: Your todos (managed by react-fluxible)
+        </h3>
         {this.props.todos.length ? (
           this.props.todos.map((todo, i) => {
             return (
@@ -16,7 +16,9 @@ class Todos extends React.Component {
                 <span
                   onClick={() => {
                     updateStore({
-                      todos: store.todos.filter((_, index) => index !== i)
+                      todos: store.todos.filter(
+                        (_, index) => index !== i
+                      )
                     });
                   }}
                   style={{
@@ -26,7 +28,8 @@ class Todos extends React.Component {
                     borderRadius: '4px',
                     backgroundColor: 'red',
                     marginRight: '5px'
-                  }}>
+                  }}
+                >
                   x
                 </span>
                 <input

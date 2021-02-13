@@ -1,4 +1,4 @@
-<!-- @format -->
+![npm](https://img.shields.io/npm/dt/react-fluxible) ![npm](https://img.shields.io/npm/dm/react-fluxible) ![npm](https://img.shields.io/npm/dw/react-fluxible)
 
 # react-fluxible
 
@@ -66,11 +66,11 @@ Refer to [fluxible-js docs](https://github.com/aprilmintacpineda/fluxible-js#usa
 ```jsx
 import useFluxibleStore from 'react-fluxible/lib/useFluxibleStore';
 
-function mapStates ({ user }) {
+function mapStates({ user }) {
   return { user };
 }
 
-function MyComponent () {
+function MyComponent() {
   const { user } = useFluxibleStore(mapStates);
 
   return (
@@ -88,20 +88,23 @@ It is important that you use `useCallback` hook in order to prevent `useFluxible
 ```jsx
 import useFluxibleStore from 'react-fluxible/lib/useFluxibleStore';
 
-function MyComponent ({ isLoggedIn }) {
-  const mapStates = React.useCallback(states => {
-    if (isLoggedIn) {
-      return {
-        user: states.user,
-        notifications: states.notifications,
-        token: states.token
-      };
-    }
+function MyComponent({ isLoggedIn }) {
+  const mapStates = React.useCallback(
+    states => {
+      if (isLoggedIn) {
+        return {
+          user: states.user,
+          notifications: states.notifications,
+          token: states.token
+        };
+      }
 
-    return {
-      defaultUser: states.defaultUser
-    };
-  }, [isLoggedIn]);
+      return {
+        defaultUser: states.defaultUser
+      };
+    },
+    [isLoggedIn]
+  );
 
   const myStates = useFluxibleStore(mapStates);
 

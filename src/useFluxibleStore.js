@@ -1,7 +1,5 @@
-/** @format */
-
-import React from 'react';
 import { addObserver, store } from 'fluxible-js';
+import React from 'react';
 
 function useFluxibleStore (mapStates) {
   const [states, setState] = React.useState(() => mapStates(store));
@@ -10,16 +8,14 @@ function useFluxibleStore (mapStates) {
    * useEffect seems to be delayed causing
    * causing the observer to be registered late.
    * We want to register it as soon as this hook gets called
-  */
-  const removeObserver = React.useMemo(
-    () => addObserver(
-      () => {
-        setState(mapStates(store));
-      },
-      Object.keys(mapStates(store))
-    ),
-    [mapStates]
-  );
+   */
+  const removeObserver = React.useMemo(() => {
+    const statesToObserve = Object.keys(mapStates(store));
+
+    return addObserver(() => {
+      setState(mapStates(store));
+    }, statesToObserve);
+  }, [mapStates]);
 
   /**
    * We can then just clean it up later down

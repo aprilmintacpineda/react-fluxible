@@ -1,9 +1,7 @@
-/** @format */
-
+import { initializeStore } from 'fluxible-js';
+import localforage from 'localforage';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import localforage from 'localforage';
-import { initializeStore } from 'fluxible-js';
 import App from './App';
 
 localforage.config({
