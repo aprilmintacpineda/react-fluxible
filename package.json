@@ -2,7 +2,7 @@
   "name": "react-fluxible",
   "version": "6.0.0",
   "description": " Connector for react-js and fluxible-js.",
-  "main": "lib/",
+  "main": "lib/index.js",
   "files": [
     "lib/*",
     "README.md",
