@@ -71,7 +71,7 @@
   "author": "April Mintac Pineda",
   "license": "MIT",
   "lint-staged": {
-    "*.js": [
+    "*.ts": [
       "prettier --write",
       "eslint --fix"
     ]
