@@ -1,4 +1,5 @@
 const alias = require('./importAliases');
+
 const unusedVarsIgnorePattern = '^_[0-9]+$';
 
 module.exports = {
@@ -6,10 +7,10 @@ module.exports = {
     react: {
       version: 'detect'
     },
-    'import/ignore': [],
+    'import/ignore': ['react-native'],
     'import/resolver': {
       'babel-module': {
-        extensions: ['.js'],
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
         alias
       }
     }
@@ -21,9 +22,15 @@ module.exports = {
     'jest/globals': true
   },
   root: true,
-  plugins: ['jest', 'react', 'module-resolver'],
+  plugins: [
+    '@typescript-eslint',
+    'jest',
+    'react',
+    'module-resolver'
+  ],
   extends: [
     'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
     'plugin:jest/recommended',
     'plugin:react-hooks/recommended',
@@ -33,11 +40,12 @@ module.exports = {
   globals: {
     Atomics: 'readonly'
   },
-  parser: '@babel/eslint-parser',
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     sourceType: 'module'
   },
   rules: {
+    '@typescript-eslint/no-var-requires': 0,
     'brace-style': ['error', '1tbs', { allowSingleLine: false }],
     'no-multiple-empty-lines': ['error', { max: 1 }],
     'no-case-declarations': 0,
@@ -83,7 +91,7 @@ module.exports = {
     'no-useless-call': ['error'],
     'no-trailing-spaces': ['error'],
     'space-before-blocks': ['error', 'always'],
-    'no-unused-vars': [
+    '@typescript-eslint/no-unused-vars': [
       'error',
       {
         varsIgnorePattern: unusedVarsIgnorePattern,
@@ -149,12 +157,6 @@ module.exports = {
       }
     ],
     eqeqeq: 'error',
-    'no-empty': 'error',
-    'no-debugger':
-      process.env.NODE_ENV === 'production' ? 'error' : 'warn',
-    'no-console':
-      process.env.NODE_ENV === 'production' ? 'error' : 'warn',
-    'no-alert':
-      process.env.NODE_ENV === 'production' ? 'error' : 'warn'
+    'no-empty': 'error'
   }
 };
