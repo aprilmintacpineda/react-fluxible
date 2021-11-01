@@ -11,8 +11,7 @@
   ],
   "peerDependencies": {
     "fluxible-js": "^6.0.2",
-    "react": "^16.12.0",
-    "redefine-statics-js": "^2.0.2"
+    "react": "^16.12.0"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
@@ -76,9 +75,5 @@
       "prettier --write",
       "eslint --fix"
     ]
-  },
-  "dependencies": {
-    "fluxible-js": "^6.0.4",
-    "redefine-statics-js": "^2.0.2"
   }
 }
