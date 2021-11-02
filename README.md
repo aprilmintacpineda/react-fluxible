@@ -8,6 +8,10 @@ Connector for [react-js](https://github.com/facebook/react/) and [fluxible-js](h
 
 From v6, the changelogs on the project will be kept in [CHANGELOG](./CHANGELOG.md), which follows [keepachangelog](https://keepachangelog.com/en/1.0.0/).
 
+# Demo
+
+https://user-images.githubusercontent.com/21032419/139817756-c5bf348e-7941-4000-9205-a165ee3ddccc.mp4
+
 # Install
 
 ```
