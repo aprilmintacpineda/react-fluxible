@@ -59,7 +59,7 @@ const initialStore = {
   isLoggedIn: false
 };
 
-const globalStore = createStore<typeof initialStore>({
+const globalStore = createStore({
   initialStore
 });
 
@@ -94,7 +94,7 @@ const initialStore = {
   // your store here
 };
 
-export const globalStore = createStore<typeof initialStore>({
+export const globalStore = createStore({
   initialStore
 });
 
