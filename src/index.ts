@@ -1,11 +1,11 @@
 import { FluxibleStore } from 'fluxible-js';
 import { useEffect, useMemo, useState } from 'react';
 
-export function createFluxibleHook<StoreType> (
-  store: FluxibleStore<StoreType>
+export function createFluxibleHook<Store> (
+  store: FluxibleStore<Store>
 ) {
   return function useFluxibleStore (
-    mapStates: (store: StoreType) => Partial<StoreType>
+    mapStates: (store: Store) => Partial<Store>
   ) {
     const [states, setState] = useState(() =>
       mapStates(store.store)
@@ -20,7 +20,7 @@ export function createFluxibleHook<StoreType> (
       () => {
         return store.addObserver(() => {
           setState(mapStates(store.store));
-        }, Object.keys(mapStates(store.store)) as Array<keyof StoreType>);
+        }, Object.keys(mapStates(store.store)) as Array<keyof Store>);
       },
       // leave blank, don't watch mapStates callback
       // eslint-disable-next-line
