@@ -132,6 +132,47 @@ function MyComponent () {
 }
 ```
 
+#### Example with state persistence using window.localStorage
+
+```tsx
+import { createStore, SyncStorage } from 'fluxible-js';
+import { createFluxibleHook } from 'react-fluxible';
+
+const initialStore = {
+  token: null,
+  isLoggedIn: false
+};
+
+const globalStore = createStore({
+  initialStore,
+  persist: {
+    stringify: true,
+    asyncStorage: window.localStorage as SyncStorage,
+    restore: (savedStore) => {
+      return {
+        token: savedStore.token
+      };
+    }
+  }
+});
+
+const useGlobalStore = createFluxibleHook(globalStore);
+
+// to connect a component to the store
+function MyComponent () {
+  const { token, isLoggedIn } = useGlobalStore((store) => {
+    return {
+      token: store.token,
+      isLoggedIn: store.isLoggedIn
+    };
+  })
+
+  // do something with the `token` and `isLoggedIn`
+
+  return <p>Hello world</p>;
+}
+```
+
 # Migrating from v5 to v6
 
 Create a new file called **globalStore.ts**
