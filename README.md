@@ -50,7 +50,7 @@ You need to tell `react-fluxible` to what store to connect to via `createFluxibl
 
 **globalStore.ts**
 
-```ts
+```tsx
 import { createStore } from 'fluxible-js';
 import { createFluxibleHook } from 'react-fluxible';
 
@@ -81,6 +81,56 @@ function MyComponent () {
 ```
 
 `createFluxibleHook` accepts a store instance as argument and returns a react hook that you can use in your components, the react hook accepts a function that function should return an object that is the store states that you want to watch in that component. In the example above, the component will watch `token` and `isLoggedIn`, every time the `token` or `isLoggedIn` changes, this component will be rerendered with the new values of the `token` and `isLoggedIn`.
+
+#### Example with state persistence using react-native-async-storage
+
+```tsx
+import { createStore, AsyncStorage as TAsyncStorage } from 'fluxible-js';
+import { createFluxibleHook } from 'react-fluxible';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const initialStore = {
+  token: null,
+  isLoggedIn: false,
+  initComplete: false
+};
+
+const globalStore = createStore(
+  {
+    initialStore,
+    persist: {
+      stringify: true,
+      asyncStorage: AsyncStorage as TAsyncStorage<typeof initialStore>,
+      restore: (savedStore) => {
+        return {
+          token: savedStore.token
+        };
+      }
+    }
+  },
+  () => {
+    globalStore.updateStore({ initComplete: true });
+  }
+);
+
+const useGlobalStore = createFluxibleHook(globalStore);
+
+// to connect a component to the store
+function MyComponent () {
+  const { token, isLoggedIn, initComplete } = useGlobalStore((store) => {
+    return {
+      token: store.token,
+      isLoggedIn: store.isLoggedIn,
+      initComplete: store.initComplete
+    };
+  })
+
+  // do something with the `token` and `isLoggedIn`
+
+  if (!initComplete) return <p>Initializing store...</p>
+  return <p>Hello world</p>;
+}
+```
 
 # Migrating from v5 to v6
 
