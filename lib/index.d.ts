@@ -1,6 +1,4 @@
 import { FluxibleStore } from 'fluxible-js';
-export declare function createFluxibleHook<StoreType>(
-  store: FluxibleStore<StoreType>
-): (
-  mapStates: (store: StoreType) => Partial<StoreType>
-) => Partial<StoreType>;
+export declare function createFluxibleHook<Store>(
+  store: FluxibleStore<Store>
+): (mapStates: (store: Store) => Partial<Store>) => Partial<Store>;
